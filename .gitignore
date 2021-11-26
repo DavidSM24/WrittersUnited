@@ -28,3 +28,12 @@ hs_err_pid*
 *.mp4
 *.png
 *.wav
+
+#Others...
+
+.settings
+target
+.classpath
+.project
+
+
