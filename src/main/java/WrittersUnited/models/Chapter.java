@@ -11,7 +11,7 @@ public class Chapter {
 
     
 
-    public Chapter(long id, String title, int number, String description, String body, String notes, Project project) {
+    public Chapter(Long id, String title, int number, String description, String body, String notes, Project project) {
         this.id = id;
         this.title = title;
         this.number = number;
