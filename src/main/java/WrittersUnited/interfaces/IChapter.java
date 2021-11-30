@@ -19,7 +19,7 @@ public interface IChapter<T> {
     public String getNotes();
     public void setNotes(String notes);
 
-    /*public IProject getProject();
-    public void setProject(Iproject project);*/
+    public IProject getProject();
+    public void setProject(Iproject project);
 
 }
