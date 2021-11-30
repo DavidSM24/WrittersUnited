@@ -1,5 +1,6 @@
 package WrittersUnited.interfaces;
 
+import WrittersUnited.models.Character;
 import java.util.List;
 
 public interface IProject {
@@ -13,7 +14,7 @@ public interface IProject {
 	public String getDescription();
 	public void setDescription(String description);
 	
-	public List<ICharacter> getCharacters();
-	public void setCharacters(List<ICharacter> characters);
+	public List<Character> getCharacters();
+	public void setCharacters(List<Character> characters);
 
 }

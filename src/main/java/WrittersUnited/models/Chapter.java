@@ -9,8 +9,7 @@ public class Chapter {
     protected String notes;
     protected Project project;
 
-    public Chapter() {
-    }
+    
 
     public Chapter(long id, String title, int number, String description, String body, String notes, Project project) {
         this.id = id;
@@ -29,6 +28,10 @@ public class Chapter {
         this.body = body;
         this.notes = notes;
         this.project = project;
+    }
+    
+    public Chapter() {
+    	this(1L,"",-1,"","","",new Project());
     }
 
     public long getId() {
@@ -87,7 +90,19 @@ public class Chapter {
         this.project = project;
     }
 
-    @Override
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Chapter))
+			return false;
+		Chapter other = (Chapter) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
+	@Override
     public String toString() {
         return "Chapter{" +
                 "id=" + id +
