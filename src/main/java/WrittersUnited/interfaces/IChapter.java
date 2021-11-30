@@ -1,7 +1,5 @@
 package WrittersUnited.interfaces;
 
-import WrittersUnited.models.Project;
-
 public interface IChapter<T> {
     public Long getId();
     public void setId(Long id);
@@ -21,7 +19,7 @@ public interface IChapter<T> {
     public String getNotes();
     public void setNotes(String notes);
 
-    public Project getProject();
-    public void setProject(Project project);
+   /* public IProject getProject();
+    public void setProject(Iproject project);*/
 
 }

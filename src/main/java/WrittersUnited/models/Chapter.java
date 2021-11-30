@@ -1,12 +1,24 @@
 package WrittersUnited.models;
-
-public class Chapter {
+import javax.persistence.*;
+import java.io.Serial;
+import java.io.Serializable;
+@Entity
+@Table(name = "chapter")
+public class Chapter implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Column(name = "id")
     protected long id;
+    @Column(name = "title")
     protected String title;
+    @Column(name = "number")
     protected int number;
+    @Column(name = "description")
     protected  String description;
+    @Column(name = "body")
     protected String body;
-    protected String notes;
+    @Column(name = "id_project")
     protected Project project;
 
     
@@ -17,7 +29,7 @@ public class Chapter {
         this.number = number;
         this.description = description;
         this.body = body;
-        this.notes = notes;
+
         this.project = project;
     }
 
@@ -26,7 +38,7 @@ public class Chapter {
         this.number = number;
         this.description = description;
         this.body = body;
-        this.notes = notes;
+
         this.project = project;
     }
     
@@ -74,13 +86,7 @@ public class Chapter {
         this.body = body;
     }
 
-    public String getNotes() {
-        return notes;
-    }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
 
     public Project getProject() {
         return project;
@@ -110,7 +116,6 @@ public class Chapter {
                 ", number=" + number +
                 ", description='" + description + '\'' +
                 ", body='" + body + '\'' +
-                ", notes='" + notes + '\'' +
                 ", project=" + project +
                 '}';
     }
