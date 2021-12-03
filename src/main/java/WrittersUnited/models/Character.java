@@ -2,9 +2,20 @@ package WrittersUnited.models;
 
 import WrittersUnited.interfaces.ICharacter;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "character")
+@NamedQueries({
+		@NamedQuery(name = "finfByName",query = "SELECT name FROM character")
+})
+
 public class Character implements ICharacter {
 	// //id,name,description,story,importance,rol,photo,project,notes
+	@Id
+	@Column(name = "id")
 	Long id;
+	@Column(name = "name")
 	String name;
 	String description;
 	String story;
