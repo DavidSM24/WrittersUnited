@@ -19,7 +19,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        loadScene(stage, "primary", " Iniciar Sesion", false, true);
+        loadScene(stage, "login", " Iniciar Sesion", false, true);
 
     }
 
