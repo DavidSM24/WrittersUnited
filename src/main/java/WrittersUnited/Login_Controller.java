@@ -2,6 +2,8 @@ package WrittersUnited;
 
 import java.io.IOException;
 import java.util.Optional;
+
+import WrittersUnited.DAOs.SesionDAO;
 import WrittersUnited.DAOs.UserDAO;
 import WrittersUnited.models.User;
 import WrittersUnited.utils.MailSender;
@@ -195,7 +197,12 @@ public class Login_Controller {
 						}	
 						*/
 						
-						App.setRoot("secondary");
+						try {
+							App.setRoot("secondary");
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 				else { //contraseña incorrecta
