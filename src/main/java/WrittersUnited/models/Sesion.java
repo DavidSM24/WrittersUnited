@@ -3,7 +3,11 @@ package WrittersUnited.models;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -16,8 +20,18 @@ import WrittersUnited.interfaces.ISesion;
 	@NamedQuery(name="isLogged",query="SELECT s FROM Sesion s WHERE id_user = :id_user"),
 })
 public class Sesion implements ISesion, Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
 	private Long id;
+	
+	@Column(name="id_user")
 	private Long id_user;
+	
+	@Column(name="time", columnDefinition = "TIMESTAMP")
 	private Timestamp time;
 	
 	public Sesion(Long id, Long id_user, Timestamp time) {
@@ -27,6 +41,13 @@ public class Sesion implements ISesion, Serializable{
 		this.time = time;
 	}
 
+	public Sesion(Long id_user, Timestamp time) {
+		super();
+		this.id = -1L;
+		this.id_user = id_user;
+		this.time = time;
+	}
+	
 	public Sesion() {
 		this(-1L,-1L, null);
 	}

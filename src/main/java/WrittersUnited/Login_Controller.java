@@ -1,12 +1,15 @@
 package WrittersUnited;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Optional;
 
 import WrittersUnited.DAOs.SesionDAO;
 import WrittersUnited.DAOs.UserDAO;
+import WrittersUnited.models.Sesion;
 import WrittersUnited.models.User;
 import WrittersUnited.utils.MailSender;
+import WrittersUnited.utils.PersistenceUnit;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -43,7 +46,7 @@ public class Login_Controller {
 	@FXML
 	protected Text btn_txt_forgot;
 	@FXML
-	protected Text btn_txt_create_user;
+	protected Button btn_txt_create_user;
 
 	// other
 	@FXML
@@ -52,13 +55,15 @@ public class Login_Controller {
 	@FXML
 	public void login() {
 
-		boolean correct=true;
+		PersistenceUnit.conexion = 1;
+
+		boolean correct = true;
 		User user = new User();
 		user.setUsername(txt_username.getText());
 
 		// comprobar campos no vacios
 		if (txt_username.getText().matches("") || txt_password.getText().matches("")) { // algun campo vacío
-			correct=false;
+			correct = false;
 			String f = "";
 			if (txt_username.getText().matches("")) {
 				f = " -Debe rellenar el campo \"Nombre de Usuario\".\n";
@@ -73,13 +78,13 @@ public class Login_Controller {
 			alert.setContentText(f);
 			alert.showAndWait();
 		}
-		
-		//comporobar usuario existe
-		if(correct) {
-			correct=false;
-			
-			UserDAO.getAll(); //refresca
-			
+
+		// comporobar usuario existe
+		if (correct) {
+			correct = false;
+
+			UserDAO.getAll(); // refresca
+
 			if (UserDAO.getByName(txt_username.getText()) == null) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setHeaderText(null);
@@ -90,122 +95,120 @@ public class Login_Controller {
 
 			else {
 				UserDAO.getAll();
-				
+
 				user = UserDAO.getByName(txt_username.getText());
-				correct=true;
+				correct = true;
 			}
-			
-			if(correct) {
-				if(txt_visible_Password.getText().matches(user.getPassword())) { //todo correcto////////////////////////////////////////
-					
-					if(SesionDAO.isConnected(user)) { //está conectado////////////////////////////////////////
-						
+
+			if (correct) {
+				if (txt_visible_Password.getText().matches(user.getPassword())) { // todo
+																					// correcto////////////////////////////////////////
+
+					if (SesionDAO.isConnected(user)) { // está conectado////////////////////////////////////////
+
 						Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setHeaderText(null);
 						alert.setTitle("Información");
 						alert.setContentText(" Este usuario ya ha iniciado sesión.");
 						alert.showAndWait();
 					}
-					
-					else if(!user.getUsername().matches("root")&&!user.isConfirmed()) {
+
+					else if (!user.getUsername().matches("root") && !user.isConfirmed()) {
 						System.out.println(user.isConfirmed());
 						try {
 							Alert alert = new Alert(AlertType.CONFIRMATION);
 							alert.setHeaderText(null);
 							alert.setTitle("Confirmación");
-							alert.setContentText(" Para la utilización de este usuario se necesita\n la confirmación del correo electrónico.\n"
-							+" Se enviará un mensaje a su correo, ¿Quire continuar?");
+							alert.setContentText(
+									" Para la utilización de este usuario se necesita\n la confirmación del correo electrónico.\n"
+											+ " Se enviará un mensaje a su correo, ¿Quire continuar?");
 
 							Optional<ButtonType> result = alert.showAndWait();
-							if (result.get() == ButtonType.OK){
-									
-								MailSender.sendMail(user.getMail(), "Código de verificación de cuenta.", "Su clave para verificar su cuenta es "+user.getUsercode());
+							if (result.get() == ButtonType.OK) {
+
+								MailSender.sendMail(user.getMail(), "Código de verificación de cuenta.",
+										"Su clave para verificar su cuenta es " + user.getUsercode());
 
 								Alert alert2 = new Alert(AlertType.INFORMATION);
 								alert2.setHeaderText(null);
 								alert2.setTitle("Información");
 								alert2.setContentText(" Mensaje enviado correctamente.\n");
 								alert2.showAndWait();
-								
+
 								Stage stage = (Stage) this.btn_login.getScene().getWindow();
 								stage.close();
-								
+
 								FXMLLoader loader = new FXMLLoader(getClass().getResource("mail_validator.fxml"));
 								Parent root;
 								root = loader.load();
-								Mail_Validation_Controller mv= loader.getController();
+								Mail_Validation_Controller mv = loader.getController();
 								mv.setController(user.getUsercode(), user);
-								Scene scene= new Scene(root);
-								Stage stage2= new Stage();
+								Scene scene = new Scene(root);
+								Stage stage2 = new Stage();
 								stage2.setScene(scene);
-								Image image= new Image("file:src/main/resources/images/icons/icon_app.jpg");
+								Image image = new Image("file:src/main/resources/images/icons/icon_app.jpg");
 								stage2.setTitle("Validación de Correo Electrónico");
 								stage2.getIcons().add(image);
-								stage2.setResizable(false);;
-								stage2.initModality(Modality.APPLICATION_MODAL);							
+								stage2.setResizable(false);
+								;
+								stage2.initModality(Modality.APPLICATION_MODAL);
 								stage2.show();
 							}
-							
-							
+
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						
+
 					}
-					
-					else { //logear...////////////////////////////////////////////////////////////////////////////////
-						
+
+					else { // logear...////////////////////////////////////////////////////////////////////////////////
+
 						System.out.println("se logeo!");
-						
+
 						Stage stage = (Stage) this.btn_login.getScene().getWindow();
 						stage.close();
-						
+
 						/*
+						 * try { FXMLLoader loader = new
+						 * FXMLLoader(getClass().getResource("primary.fxml")); Parent root =
+						 * loader.load(); PrimaryController primary= loader.getController(); Timestamp
+						 * ts=new Timestamp(System.currentTimeMillis()); Sesion s=new
+						 * Sesion(SesionDAO.getNewId(),user.getId(),ts); primary.setController(primary,
+						 * s); primary.sendSession(); Scene scene= new Scene(root); Stage stage2= new
+						 * Stage(); stage2.setScene(scene); Image image= new
+						 * Image("file:src/main/resources/images/icons/icon_app.jpg");
+						 * stage2.setTitle("Final Showdown"); stage2.getIcons().add(image);
+						 * stage2.setResizable(false);; stage2.initModality(Modality.APPLICATION_MODAL);
+						 * stage2.setOnCloseRequest(new EventHandler<WindowEvent>() {
+						 * 
+						 * @Override public void handle(WindowEvent e) { try {
+						 * 
+						 * } catch (Exception e2) { // TODO: handle exception } Platform.exit();
+						 * System.exit(0); } }); stage2.show(); } catch (IOException e) { // TODO
+						 * Auto-generated catch block e.printStackTrace(); }
+						 */
+
 						try {
-							FXMLLoader loader = new FXMLLoader(getClass().getResource("primary.fxml"));
+							FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
 							Parent root = loader.load();
-							PrimaryController primary= loader.getController();
-							Timestamp ts=new Timestamp(System.currentTimeMillis());
-							Sesion s=new Sesion(SesionDAO.getNewId(),user.getId(),ts);
-							primary.setController(primary, s);
-							primary.sendSession();
-							Scene scene= new Scene(root);
-							Stage stage2= new Stage();
+							//SecondaryController secondary = loader.getController();
+							Timestamp ts = new Timestamp(System.currentTimeMillis());
+							Sesion s = new Sesion(user.getId(), ts);
+							Scene scene = new Scene(root);
+							Stage stage2 = new Stage();
 							stage2.setScene(scene);
-							Image image= new Image("file:src/main/resources/images/icons/icon_app.jpg");
-							stage2.setTitle("Final Showdown");
-							stage2.getIcons().add(image);
-							stage2.setResizable(false);;
-							stage2.initModality(Modality.APPLICATION_MODAL);
-							stage2.setOnCloseRequest(new EventHandler<WindowEvent>() {
-							       @Override
-							       public void handle(WindowEvent e) {
-							          try {
-										
-									} catch (Exception e2) {
-										// TODO: handle exception
-									}
-							    	  Platform.exit();
-							          System.exit(0);
-							       }
-							    });
+							// Image image= new Image("file:src/main/resources/images/icons/icon_app.jpg");
+							stage2.setTitle("Writters United");
+							// stage2.getIcons().add(image);
 							stage2.show();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}	
-						*/
-						
-						try {
-							App.setRoot("secondary");
+							
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
-				}
-				else { //contraseña incorrecta
+				} else { // contraseña incorrecta
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setHeaderText(null);
 					alert.setTitle("Información");
@@ -218,47 +221,26 @@ public class Login_Controller {
 
 	@FXML
 	public void create() {
-		
+
 		Stage stage = (Stage) this.btn_txt_create_user.getScene().getWindow();
 		stage.close();
-		 /*
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("user_generator.fxml"));
-			Parent root;
-			root = loader.load();
-			User_Creator_Controller ucc=loader.getController();
-			Scene scene= new Scene(root);
-			Stage stage2= new Stage();
-			stage2.setScene(scene);
-			Image image= new Image("file:src/main/resources/images/user.png");
-			stage2.setTitle("Creación de Usuario");
-			stage2.getIcons().add(image);
-			stage2.setResizable(false);;
-			stage2.initModality(Modality.APPLICATION_MODAL);
-			stage2.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			       @Override
-			       public void handle(WindowEvent e) {
-			          try {
-						
-					} catch (Exception e2) {
-						// TODO: handle exception
-					}
-			    	  ucc.cancel();
-			       }
-			    });
-			stage2.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
-		
-	}
+		/*
+		 * try { FXMLLoader loader = new
+		 * FXMLLoader(getClass().getResource("user_generator.fxml")); Parent root; root
+		 * = loader.load(); User_Creator_Controller ucc=loader.getController(); Scene
+		 * scene= new Scene(root); Stage stage2= new Stage(); stage2.setScene(scene);
+		 * Image image= new Image("file:src/main/resources/images/user.png");
+		 * stage2.setTitle("Creación de Usuario"); stage2.getIcons().add(image);
+		 * stage2.setResizable(false);; stage2.initModality(Modality.APPLICATION_MODAL);
+		 * stage2.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		 * 
+		 * @Override public void handle(WindowEvent e) { try {
+		 * 
+		 * } catch (Exception e2) { // TODO: handle exception } ucc.cancel(); } });
+		 * stage2.show(); } catch (IOException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
 
-	@FXML
-	public void changecreate() {
-		btn_txt_create_user.setFill(Color.DODGERBLUE);
-		btn_txt_create_user.setUnderline(true);
 	}
 
 	@FXML
@@ -267,9 +249,11 @@ public class Login_Controller {
 		if (che_showPassword.isSelected()) {
 			txt_visible_Password.setVisible(true);
 			txt_password.setVisible(false);
+			che_showPassword.setText("Ocultar Contraseña");
 		} else {
 			txt_password.setVisible(true);
 			txt_visible_Password.setVisible(false);
+			che_showPassword.setText("Mostrar Contraseña");
 		}
 	}
 
@@ -284,4 +268,3 @@ public class Login_Controller {
 	}
 
 }
-

@@ -15,14 +15,12 @@ import WrittersUnited.utils.PersistenceUnit;
 
 public class SesionDAO {
 
-	public static int conexion;
-
 	/**
 	 * Instancia los eventos de la bbdd si estaban desconectados...
 	 */
 	public static void activateEvents() {
 		
-		if(conexion==1) {
+		if(PersistenceUnit.conexion==1) {
 			EntityManager em=createEm();
 			em.getTransaction().begin();
 			em.createNativeQuery("SET GLOBAL event_scheduler = ON");		
@@ -33,11 +31,9 @@ public class SesionDAO {
 	public static EntityManager createEm() {
 		EntityManagerFactory emf = null;
 
-		if (conexion == 1) {
+		if (PersistenceUnit.conexion == 1) {
 			emf = PersistenceUnit.getInstance();
-		} 
-		
-		else {
+		} else {
 			emf = PersistenceUnit.getLocalInstance();
 		}
 

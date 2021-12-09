@@ -10,16 +10,11 @@ import WrittersUnited.models.User;
 import WrittersUnited.utils.PersistenceUnit;
 
 public class UserDAO {
-
-	/**
-	 * 1 = MDB, 2 = H2
-	 */
-	public static int conexion;
 	
 	public static EntityManager createEm() {
 		EntityManagerFactory emf=null;
 		
-		if(conexion==1) {
+		if(PersistenceUnit.conexion==1) {
 		 emf=PersistenceUnit.getInstance();
 		}
 		else {
@@ -61,7 +56,10 @@ public class UserDAO {
 		
 		TypedQuery<User> q=em.createNamedQuery("getByName",User.class);
 		q.setParameter("username",name);
-		result=q.getResultList().get(0);
+	
+		if(q.getResultList()!=null&&q.getResultList().size()>0) {
+			result=q.getResultList().get(0);
+		}
 		
 		
 		em.getTransaction().commit();

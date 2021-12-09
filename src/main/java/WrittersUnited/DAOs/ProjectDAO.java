@@ -13,12 +13,10 @@ import WrittersUnited.utils.PersistenceUnit;
 
 public class ProjectDAO {
 
-	public static int conexion;
-
 	public static EntityManager createEm() {
 		EntityManagerFactory emf = null;
 
-		if (conexion == 1) {
+		if (PersistenceUnit.conexion == 1) {
 			emf = PersistenceUnit.getInstance();
 		} else {
 			emf = PersistenceUnit.getLocalInstance();

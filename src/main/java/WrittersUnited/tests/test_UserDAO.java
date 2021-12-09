@@ -10,13 +10,14 @@ import WrittersUnited.DAOs.UserDAO;
 import WrittersUnited.models.Character;
 import WrittersUnited.models.Project;
 import WrittersUnited.models.User;
+import WrittersUnited.utils.PersistenceUnit;
 
 public class test_UserDAO {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		UserDAO.conexion=2;
+		PersistenceUnit.conexion=2;
 		User u=new User(2L,"nose","d@gmail.com","1","1",true,new HashSet<Project>());
 		Set<Project>p=new HashSet<Project>();
 		p.add(new Project(3L,"NARUTO","mu ubena",new HashSet<Character>(),u));

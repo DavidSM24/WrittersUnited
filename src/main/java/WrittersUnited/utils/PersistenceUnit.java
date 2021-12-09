@@ -5,6 +5,7 @@ import javax.persistence.Persistence;
 
 public class PersistenceUnit {
 	
+	public static int conexion=1;
 	private static final String PUN= "aplicacionMariaDB";
 	private static final String LPUN= "aplicacionH2";
 									
