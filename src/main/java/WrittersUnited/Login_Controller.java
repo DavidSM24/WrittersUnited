@@ -192,7 +192,7 @@ public class Login_Controller {
 						try {
 							FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
 							Parent root = loader.load();
-							//SecondaryController secondary = loader.getController();
+							// SecondaryController secondary = loader.getController();
 							Timestamp ts = new Timestamp(System.currentTimeMillis());
 							Sesion s = new Sesion(user.getId(), ts);
 							Scene scene = new Scene(root);
@@ -202,7 +202,7 @@ public class Login_Controller {
 							stage2.setTitle("Writters United");
 							// stage2.getIcons().add(image);
 							stage2.show();
-							
+
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -224,22 +224,32 @@ public class Login_Controller {
 
 		Stage stage = (Stage) this.btn_txt_create_user.getScene().getWindow();
 		stage.close();
-		/*
-		 * try { FXMLLoader loader = new
-		 * FXMLLoader(getClass().getResource("user_generator.fxml")); Parent root; root
-		 * = loader.load(); User_Creator_Controller ucc=loader.getController(); Scene
-		 * scene= new Scene(root); Stage stage2= new Stage(); stage2.setScene(scene);
-		 * Image image= new Image("file:src/main/resources/images/user.png");
-		 * stage2.setTitle("Creación de Usuario"); stage2.getIcons().add(image);
-		 * stage2.setResizable(false);; stage2.initModality(Modality.APPLICATION_MODAL);
-		 * stage2.setOnCloseRequest(new EventHandler<WindowEvent>() {
-		 * 
-		 * @Override public void handle(WindowEvent e) { try {
-		 * 
-		 * } catch (Exception e2) { // TODO: handle exception } ucc.cancel(); } });
-		 * stage2.show(); } catch (IOException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 */
+
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("register.fxml"));
+			Parent root;
+			root = loader.load();
+			User_Creator_Controller ucc = loader.getController();
+			Scene scene = new Scene(root);
+			Stage stage2 = new Stage();
+			stage2.setScene(scene);
+			Image image = new Image("file:src/main/resources/images/user.png");
+			stage2.setTitle("Creación de Usuario");
+			stage2.getIcons().add(image);
+			stage2.setResizable(false);
+			;
+			stage2.initModality(Modality.APPLICATION_MODAL);
+			/*
+			 * stage2.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			 * 
+			 * @Override public void handle(WindowEvent e) { try {
+			 * 
+			 * } catch (Exception e2) { // TODO: handle exception } ucc.cancel(); } });
+			 */
+			stage2.show();
+		} catch (IOException e) { // TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

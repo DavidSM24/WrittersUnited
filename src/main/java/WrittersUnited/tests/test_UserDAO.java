@@ -14,10 +14,13 @@ public class test_UserDAO {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		PersistenceUnit.conexion=2;
+		PersistenceUnit.conexion=1;
 		
-		User u = new User();
+		User u = UserDAO.getByName("user");
+		Project paux=(Project) u.getProjects().toArray()[0];
+		paux.getChapters().add(new Chapter("afaf",0,"afaf","afafaf","afaf",paux));
 		UserDAO.save(u);
+		System.out.println(u.getProjects());
 		
 		
 	
