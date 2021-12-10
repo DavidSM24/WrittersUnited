@@ -2,7 +2,7 @@ package WrittersUnited.interfaces;
 
 import WrittersUnited.models.Project;
 
-public interface IChapter<T> {
+public interface IChapter {
     public Long getId();
     public void setId(Long id);
 

@@ -3,9 +3,11 @@ package WrittersUnited.DAOs;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import WrittersUnited.models.Project;
 import WrittersUnited.models.User;
 import WrittersUnited.utils.PersistenceUnit;
 
@@ -91,6 +93,7 @@ public class UserDAO {
 		
 		TypedQuery<User> q=em.createNamedQuery("getByUserCode",User.class);
 		q.setParameter("usercode",code);
+
 		if(q.getResultList()!=null&&q.getResultList().size()>0) {
 			result=q.getResultList().get(0);
 		}
@@ -120,6 +123,17 @@ public class UserDAO {
 		em.createNativeQuery("DELETE FROM User");		
 		em.getTransaction().commit();
 
+	}
+	
+	public static void addProject(User u,Project p){
+		EntityManager em=createEm();
+		em.getTransaction().begin();
+		
+		User uaux=em.merge(u);
+		Set<Project> lp=uaux.getProjects();
+		lp.add(p);
+		uaux.setProjects(lp);
+		em.getTransaction().commit();
 	}
 	
 }

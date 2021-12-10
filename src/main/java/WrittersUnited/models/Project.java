@@ -33,7 +33,7 @@ import WrittersUnited.interfaces.IProject;
 	@NamedQuery(name="getByUserCreator",query="SELECT p FROM Project p WHERE id_creation_user= :id")
 })
 public class Project implements IProject,Serializable {
-
+//id,title,description,id_cration_user
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -47,6 +47,9 @@ public class Project implements IProject,Serializable {
 	@Column(name="description")
 	String description;
 	
+	@OneToMany(mappedBy = "project",cascade = CascadeType.ALL,orphanRemoval = true)
+	Set<Chapter> chapters;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_creation_user")
 	User user_creator;
@@ -54,25 +57,27 @@ public class Project implements IProject,Serializable {
 	@Transient
 	Set<Character> characters;	
 	
-	public Project(Long id, String title, String description, Set<Character> characters, User user) {
+	public Project(Long id, String title, String description, Set<Character> characters, User user, Set<Chapter> chapters) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.characters = characters;
+		this.chapters=chapters;
 		this.user_creator=user;
 	}
 
-	public Project(String title, String description, Set<Character> characters,User user) {
+	public Project(String title, String description, Set<Character> characters,User user,Set<Chapter> chapters) {
 		super();
 		this.title = title;
 		this.description = description;
 		this.characters = characters;
+		this.chapters=chapters;
 		this.user_creator=user;
 	}
 
 	public Project() {
-		this(-1L,"","",new HashSet<Character>(),new User());
+		this(-1L,"","",new HashSet<Character>(), new User(),new HashSet<Chapter>());
 	}
 
 	@Override
@@ -115,6 +120,14 @@ public class Project implements IProject,Serializable {
 		this.characters = characters;
 	}
 	
+	public Set<Chapter> getChapters() {
+		return chapters;
+	}
+
+	public void setChapters(Set<Chapter> chapters) {
+		this.chapters = chapters;
+	}
+
 	public User getUser_creator() {
 		return user_creator;
 	}
@@ -148,8 +161,7 @@ public class Project implements IProject,Serializable {
 
 	@Override
 	public String toString() {
-		return "Project [id=" + id + ", title=" + title + ", description=" + description + ", characters=" + characters
-				+ ", creator="+user_creator.getUsername()+"]";
+		return "Project [id=" + id + ", title=" + title + ", description=" + description + ", chapters=" + chapters
+				+ ", user_creator=" + user_creator.getUsername() + ", characters=" + characters + "]";
 	}
-
 }

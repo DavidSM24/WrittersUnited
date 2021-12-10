@@ -1,15 +1,53 @@
 package WrittersUnited.models;
 
-public class Chapter {
-    protected long id;
-    protected String title;
-    protected int number;
-    protected  String description;
-    protected String body;
-    protected String notes;
-    protected Project project;
+import java.io.Serializable;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import WrittersUnited.interfaces.IChapter;
+
+@Entity
+@Table(name="Chapter")
+@NamedQueries({
+	@NamedQuery(name="getByCTitle",query="SELECT c FROM Chapter c WHERE LOWER(title) LIKE :title"),
+})
+public class Chapter implements IChapter, Serializable{
     
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
+	protected long id;
+    
+	@Column(name="title")
+	protected String title;
+    
+	@Column(name="number")
+	protected int number;
+    
+	@Column(name="description")
+	protected String description;
+    
+	@Column(name="body")
+	protected String body;
+    
+	@Column(name="notes")
+	protected String notes;
+    
+	@ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.MERGE)
+	@JoinColumn(name="id_project")
+	protected Project project;
 
     public Chapter(Long id, String title, int number, String description, String body, String notes, Project project) {
         this.id = id;
@@ -34,11 +72,11 @@ public class Chapter {
     	this(1L,"",-1,"","","",new Project());
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -111,7 +149,7 @@ public class Chapter {
                 ", description='" + description + '\'' +
                 ", body='" + body + '\'' +
                 ", notes='" + notes + '\'' +
-                ", project=" + project +
+                ", project=" + project.getTitle() +
                 '}';
     }
 

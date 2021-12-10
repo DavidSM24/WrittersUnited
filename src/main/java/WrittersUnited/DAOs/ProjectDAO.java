@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import WrittersUnited.models.Project;
@@ -63,21 +64,18 @@ public class ProjectDAO {
 
 	public static List<Project> getByUserCreator(User u) {
 		List<Project> result = new ArrayList<Project>();
-
 		EntityManager em = createEm();
 		em.getTransaction().begin();
-
 		TypedQuery<Project> q = em.createNamedQuery("getByUserCreator", Project.class);
 		q.setParameter("id", u.getId());
 		result = q.getResultList();
-
 		em.getTransaction().commit();
 		return result;
 	}
 
 	public static void save(Project p) {
-		EntityManager em = createEm();
-		em.getTransaction().begin();
+		EntityManager em=createEm();
+		em.getTransaction().begin();	
 		em.merge(p);
 		em.getTransaction().commit();
 	}
@@ -95,7 +93,6 @@ public class ProjectDAO {
 		em.getTransaction().begin();
 		em.createNativeQuery("DELETE FROM Project");
 		em.getTransaction().commit();
-
 	}
 
 }

@@ -10,6 +10,7 @@ public class PersistenceUnit {
 	private static final String LPUN= "aplicacionH2";
 									
 	private static EntityManagerFactory emf;
+	private static EntityManagerFactory emfl;
 	
 	public static EntityManagerFactory getLocalInstance() {
 		if(emf==null) {
@@ -19,9 +20,9 @@ public class PersistenceUnit {
 	}
 	
 	public static EntityManagerFactory getInstance() {
-		if(emf==null) {
-			emf = Persistence.createEntityManagerFactory(PUN); // <-- puntero a META-INF
+		if(emfl==null) {
+			emfl = Persistence.createEntityManagerFactory(PUN); // <-- puntero a META-INF
 		}
-		return emf;
+		return emfl;
 	}
 }
