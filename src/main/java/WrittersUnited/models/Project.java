@@ -47,15 +47,17 @@ public class Project implements IProject,Serializable {
 	@Column(name="description")
 	String description;
 	
-	@OneToMany(mappedBy = "project",cascade = CascadeType.ALL,orphanRemoval = true)
+	@OneToMany(mappedBy = "project",orphanRemoval = true)
 	Set<Chapter> chapters;
+	
+	@OneToMany(mappedBy = "chara_project",orphanRemoval = true)
+	Set<Character> characters;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_creation_user")
 	User user_creator;
 	
-	@Transient
-	Set<Character> characters;	
+		
 	
 	public Project(Long id, String title, String description, Set<Character> characters, User user, Set<Chapter> chapters) {
 		super();
@@ -164,4 +166,5 @@ public class Project implements IProject,Serializable {
 		return "Project [id=" + id + ", title=" + title + ", description=" + description + ", chapters=" + chapters
 				+ ", user_creator=" + user_creator.getUsername() + ", characters=" + characters + "]";
 	}
+
 }

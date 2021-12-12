@@ -16,6 +16,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import WrittersUnited.interfaces.IUser;
 
 @Entity
@@ -49,7 +53,9 @@ public class User implements IUser, Serializable{
 	@Column(name="confirmed") //tipo set en bbdd, necesita columnDefinition?
 	private boolean confirmed;
 	
-	@OneToMany(mappedBy = "user_creator",cascade = CascadeType.ALL,orphanRemoval = true)
+	
+	
+	@OneToMany(mappedBy = "user_creator",orphanRemoval = true)
 	Set<Project> projects;
 
 	public User(Long id, String username,String mail, String password, String usercode, boolean confirmed, Set<Project> projects) {

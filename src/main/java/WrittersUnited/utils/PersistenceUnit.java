@@ -9,20 +9,16 @@ public class PersistenceUnit {
 	private static final String PUN= "aplicacionMariaDB";
 	private static final String LPUN= "aplicacionH2";
 									
-	private static EntityManagerFactory emf;
-	private static EntityManagerFactory emfl;
-	
-	public static EntityManagerFactory getLocalInstance() {
-		if(emf==null) {
-			emf = Persistence.createEntityManagerFactory(LPUN); // <-- puntero a META-INF
-		}
-		return emf;
-	}
+	public static EntityManagerFactory emf;
 	
 	public static EntityManagerFactory getInstance() {
-		if(emfl==null) {
-			emfl = Persistence.createEntityManagerFactory(PUN); // <-- puntero a META-INF
+		if(conexion==1) {
+			emf = Persistence.createEntityManagerFactory(PUN);
 		}
-		return emfl;
+		else {
+			emf = Persistence.createEntityManagerFactory(LPUN);
+
+		}
+		return emf;
 	}
 }

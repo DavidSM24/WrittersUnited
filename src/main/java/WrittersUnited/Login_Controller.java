@@ -149,7 +149,7 @@ public class Login_Controller {
 								Image image = new Image("file:src/main/resources/images/icons/icon_app.jpg");
 								stage2.setTitle("Validación de Correo Electrónico");
 								stage2.getIcons().add(image);
-								stage2.setResizable(false);
+								//stage2.setResizable(false);
 								;
 								stage2.initModality(Modality.APPLICATION_MODAL);
 								stage2.show();
@@ -169,38 +169,21 @@ public class Login_Controller {
 						Stage stage = (Stage) this.btn_login.getScene().getWindow();
 						stage.close();
 
-						/*
-						 * try { FXMLLoader loader = new
-						 * FXMLLoader(getClass().getResource("primary.fxml")); Parent root =
-						 * loader.load(); PrimaryController primary= loader.getController(); Timestamp
-						 * ts=new Timestamp(System.currentTimeMillis()); Sesion s=new
-						 * Sesion(SesionDAO.getNewId(),user.getId(),ts); primary.setController(primary,
-						 * s); primary.sendSession(); Scene scene= new Scene(root); Stage stage2= new
-						 * Stage(); stage2.setScene(scene); Image image= new
-						 * Image("file:src/main/resources/images/icons/icon_app.jpg");
-						 * stage2.setTitle("Final Showdown"); stage2.getIcons().add(image);
-						 * stage2.setResizable(false);; stage2.initModality(Modality.APPLICATION_MODAL);
-						 * stage2.setOnCloseRequest(new EventHandler<WindowEvent>() {
-						 * 
-						 * @Override public void handle(WindowEvent e) { try {
-						 * 
-						 * } catch (Exception e2) { // TODO: handle exception } Platform.exit();
-						 * System.exit(0); } }); stage2.show(); } catch (IOException e) { // TODO
-						 * Auto-generated catch block e.printStackTrace(); }
-						 */
-
 						try {
-							FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary.fxml"));
-							Parent root = loader.load();
-							// SecondaryController secondary = loader.getController();
-							Timestamp ts = new Timestamp(System.currentTimeMillis());
-							Sesion s = new Sesion(user.getId(), ts);
+							FXMLLoader loader = new FXMLLoader(getClass().getResource("SelectProject.fxml"));
+							Parent root;
+							root = loader.load();
+							Project_Selector_Controller psc = loader.getController();
+							psc.setController(user);
 							Scene scene = new Scene(root);
 							Stage stage2 = new Stage();
 							stage2.setScene(scene);
-							// Image image= new Image("file:src/main/resources/images/icons/icon_app.jpg");
-							stage2.setTitle("Writters United");
-							// stage2.getIcons().add(image);
+							Image image = new Image("file:src/main/resources/images/icons/icon_app.jpg");
+							stage2.setTitle("Selección de Projecto");
+							stage2.getIcons().add(image);
+							//stage2.setResizable(false);
+							;
+							stage2.initModality(Modality.APPLICATION_MODAL);
 							stage2.show();
 
 						} catch (IOException e) {

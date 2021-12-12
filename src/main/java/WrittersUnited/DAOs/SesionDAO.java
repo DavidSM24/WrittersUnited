@@ -29,14 +29,10 @@ public class SesionDAO {
 	}
 
 	public static EntityManager createEm() {
-		EntityManagerFactory emf = null;
-
-		if (PersistenceUnit.conexion == 1) {
-			emf = PersistenceUnit.getInstance();
-		} else {
-			emf = PersistenceUnit.getLocalInstance();
-		}
-
+		EntityManagerFactory emf=null;
+		
+		emf=PersistenceUnit.getInstance();
+		
 		return emf.createEntityManager();
 	}
 	

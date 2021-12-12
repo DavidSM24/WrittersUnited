@@ -1,17 +1,59 @@
 package WrittersUnited.models;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
 import WrittersUnited.interfaces.ICharacter;
 
-public class Character implements ICharacter {
+@Entity
+@Table(name="Chara")
+@NamedQueries({
+	@NamedQuery(name="getCharacterName",query="SELECT c FROM Character c WHERE LOWER(name) LIKE :name"),
+})
+public class Character implements ICharacter,Serializable {
 	// //id,name,description,story,importance,rol,photo,project,notes
+	
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
 	Long id;
+	
+	@Column(name="name")
 	String name;
+	
+	@Column(name="description")
 	String description;
+	
+	@Column(name="story")
 	String story;
+	
+	@Column(name="importance")
 	String importance;
+	
+	@Column(name="rol")
 	String rol;
+	
+	@Column(name="photo")
 	String photo;
-	Project project;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="id_project")
+	Project chara_project;
+	
+	@Column(name="notes")
 	String notes;
 
 	public Character(Long id, String name, String description, String story, String importance, String rol,
@@ -24,7 +66,7 @@ public class Character implements ICharacter {
 		this.importance = importance;
 		this.rol = rol;
 		this.photo = photo;
-		this.project = project;
+		this.chara_project = project;
 		this.notes = notes;
 	}
 
@@ -37,7 +79,7 @@ public class Character implements ICharacter {
 		this.importance = importance;
 		this.rol = rol;
 		this.photo = photo;
-		this.project = project;
+		this.chara_project = project;
 		this.notes = notes;
 	}
 
@@ -117,12 +159,12 @@ public class Character implements ICharacter {
 
 	@Override
 	public Project getProject() {
-		return project;
+		return chara_project;
 	}
 
 	@Override
 	public void setProject(Project project) {
-		this.project = project;
+		this.chara_project = project;
 	}
 
 	@Override
@@ -152,9 +194,7 @@ public class Character implements ICharacter {
 
 	@Override
 	public String toString() {
-		return "Character [id=" + id + ", name=" + name + ", description=" + description + ", story=" + story
-				+ ", importance=" + importance + ", rol=" + rol + ", photo=" + photo + ", project=" + project
-				+ ", notes=" + notes + "]";
+		return "["+id+" - "+name+"]";
 	}
 
 }

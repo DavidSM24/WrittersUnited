@@ -1,6 +1,8 @@
 package WrittersUnited.interfaces;
 
+import WrittersUnited.models.Chapter;
 import WrittersUnited.models.Project;
+import WrittersUnited.models.User;
 
 public interface IChapter {
     public Long getId();

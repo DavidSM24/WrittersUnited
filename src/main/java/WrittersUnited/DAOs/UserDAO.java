@@ -1,7 +1,7 @@
 package WrittersUnited.DAOs;
 
 import java.util.ArrayList;
-
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
@@ -16,12 +16,7 @@ public class UserDAO {
 	public static EntityManager createEm() {
 		EntityManagerFactory emf=null;
 		
-		if(PersistenceUnit.conexion==1) {
-		 emf=PersistenceUnit.getInstance();
-		}
-		else {
-		 emf=PersistenceUnit.getLocalInstance();
-		}
+		emf=PersistenceUnit.getInstance();
 		
 		return emf.createEntityManager();
 	}
@@ -31,12 +26,11 @@ public class UserDAO {
 		
 		EntityManager em=createEm();
 		em.getTransaction().begin();
-		
 		result=em.createQuery("FROM User").getResultList();
-		
-		
-		
 		em.getTransaction().commit();
+		em.clear();
+		em.close();
+		PersistenceUnit.emf.close();
 		return result;
 	}
 	
@@ -105,8 +99,17 @@ public class UserDAO {
 	public static void save(User u) {
 		EntityManager em=createEm();
 		em.getTransaction().begin();	
+		
+		if(em.find(Project.class, u.getId())!=null) {
+			em.merge(u);
+		}
+		else {
+			em.persist(u);
+		}
+		
 		em.merge(u);
 		em.getTransaction().commit();
+		PersistenceUnit.emf.close();
 	}
 	
 	public static void delete(User u) {
@@ -125,14 +128,28 @@ public class UserDAO {
 
 	}
 	
-	public static void addProject(User u,Project p){
+	public static void addProject(User u,Project p) {
 		EntityManager em=createEm();
 		em.getTransaction().begin();
 		
-		User uaux=em.merge(u);
-		Set<Project> lp=uaux.getProjects();
-		lp.add(p);
-		uaux.setProjects(lp);
+		User ux=em.merge(u);
+		Set<Project> ls=ux.getProjects();
+		ls.add(p);
+		ux.setProjects(ls);
+		em.getTransaction().commit();
+		
+	}
+	
+	public static void removeProject(User u,Project p){
+
+		EntityManager em=createEm();
+		em.getTransaction().begin();
+		
+		User ux=em.merge(u);
+		Set<Project> ls=ux.getProjects();
+		ls.remove(p);
+		ux.setProjects(ls);		
+		
 		em.getTransaction().commit();
 	}
 	

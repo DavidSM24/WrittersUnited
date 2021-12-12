@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="357.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="357.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WrittersUnited.Project_Selector_Controller">
    <center>
-      <TableView prefHeight="203.0" prefWidth="112.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="table_projects" prefHeight="203.0" prefWidth="112.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn prefWidth="215.0" text="PROYECTOS" />
+          <TableColumn fx:id="col_name" prefWidth="215.0" text="PROYECTOS" />
         </columns>
          <BorderPane.margin>
             <Insets bottom="16.0" left="17.0" right="-9.0" top="19.0" />
@@ -24,17 +24,22 @@
    <right>
       <VBox prefHeight="303.0" prefWidth="133.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="AÑADIR">
+            <Button mnemonicParsing="false" onAction="#add" text="NUEVO">
                <VBox.margin>
                   <Insets left="39.0" top="53.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="SELECCIONAR">
+            <Button fx:id="btn_select" mnemonicParsing="false" onAction="#select" text="SELECCIONAR">
                <VBox.margin>
                   <Insets left="25.0" top="25.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="BORRAR">
+            <Button mnemonicParsing="false" onAction="#edit" text="EDITAR">
+               <VBox.margin>
+                  <Insets left="39.0" top="20.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#remove" text="BORRAR">
                <VBox.margin>
                   <Insets left="39.0" top="25.0" />
                </VBox.margin>

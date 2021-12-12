@@ -15,14 +15,10 @@ import WrittersUnited.utils.PersistenceUnit;
 public class ProjectDAO {
 
 	public static EntityManager createEm() {
-		EntityManagerFactory emf = null;
-
-		if (PersistenceUnit.conexion == 1) {
-			emf = PersistenceUnit.getInstance();
-		} else {
-			emf = PersistenceUnit.getLocalInstance();
-		}
-
+		EntityManagerFactory emf=null;
+		
+		emf=PersistenceUnit.getInstance();
+		
 		return emf.createEntityManager();
 	}
 
@@ -76,6 +72,13 @@ public class ProjectDAO {
 	public static void save(Project p) {
 		EntityManager em=createEm();
 		em.getTransaction().begin();	
+		em.persist(p);
+		em.getTransaction().commit();
+	}
+	
+	public static void update(Project p) {
+		EntityManager em=createEm();
+		em.getTransaction().begin();
 		em.merge(p);
 		em.getTransaction().commit();
 	}
@@ -83,7 +86,8 @@ public class ProjectDAO {
 	public static void delete(Project p) {
 		EntityManager em = createEm();
 		em.getTransaction().begin();
-		em.remove(p);
+		Project aux=em.merge(p);
+		em.remove(aux);		
 		em.getTransaction().commit();
 	}
 

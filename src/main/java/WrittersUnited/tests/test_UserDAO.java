@@ -1,7 +1,9 @@
 package WrittersUnited.tests;
 
 import java.util.HashSet;
+import java.util.List;
 
+import WrittersUnited.DAOs.CharacterDAO;
 import WrittersUnited.DAOs.ProjectDAO;
 import WrittersUnited.DAOs.UserDAO;
 import WrittersUnited.models.Chapter;
@@ -16,11 +18,7 @@ public class test_UserDAO {
 		// TODO Auto-generated method stub
 		PersistenceUnit.conexion=1;
 		
-		User u = UserDAO.getByName("user");
-		Project paux=(Project) u.getProjects().toArray()[0];
-		paux.getChapters().add(new Chapter("afaf",0,"afaf","afafaf","afaf",paux));
-		UserDAO.save(u);
-		System.out.println(u.getProjects());
+		System.out.println(CharacterDAO.getAll());
 		
 		
 	

@@ -45,7 +45,7 @@ public class Chapter implements IChapter, Serializable{
 	@Column(name="notes")
 	protected String notes;
     
-	@ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.MERGE)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id_project")
 	protected Project project;
 
@@ -152,5 +152,4 @@ public class Chapter implements IChapter, Serializable{
                 ", project=" + project.getTitle() +
                 '}';
     }
-
 }
