@@ -9,7 +9,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="357.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WrittersUnited.Project_Selector_Controller">
    <center>
-      <TableView fx:id="table_projects" prefHeight="203.0" prefWidth="112.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="table_projects" onKeyReleased="#en_dis_share_btn" onMouseClicked="#en_dis_share_btn" prefHeight="203.0" prefWidth="112.0" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="col_name" prefWidth="215.0" text="PROYECTOS" />
         </columns>
@@ -42,6 +42,11 @@
             <Button mnemonicParsing="false" onAction="#remove" text="BORRAR">
                <VBox.margin>
                   <Insets left="39.0" top="25.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="btn_share" mnemonicParsing="false" onAction="#share" text="COMPARTIR">
+               <VBox.margin>
+                  <Insets left="30.0" top="25.0" />
                </VBox.margin>
             </Button>
          </children>

@@ -15,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -57,7 +59,15 @@ public class Project implements IProject,Serializable {
 	@JoinColumn(name="id_creation_user")
 	User user_creator;
 	
-		
+	@ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "user_projectshared",
+            joinColumns = @JoinColumn(name = "id_project"),
+            inverseJoinColumns = @JoinColumn(name = "id_user")
+    )
+	Set<User> shared_users;
 	
 	public Project(Long id, String title, String description, Set<Character> characters, User user, Set<Chapter> chapters) {
 		super();
@@ -136,6 +146,14 @@ public class Project implements IProject,Serializable {
 
 	public void setUser_creator(User user_creator) {
 		this.user_creator = user_creator;
+	}
+
+	public Set<User> getShared_users() {
+		return shared_users;
+	}
+
+	public void setShared_users(Set<User> shared_users) {
+		this.shared_users = shared_users;
 	}
 
 	@Override

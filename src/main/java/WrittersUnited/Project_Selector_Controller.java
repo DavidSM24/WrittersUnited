@@ -35,6 +35,9 @@ public class Project_Selector_Controller {
 	ObservableList<Project> projects;
 	
 	@FXML
+	Button btn_share;
+	
+	@FXML
 	Button btn_select;
 	
 	@FXML
@@ -55,6 +58,15 @@ public class Project_Selector_Controller {
 					projects.add(p);
 				}
 			}
+			
+			if(u.getShared_projects()!=null) {
+				for(Project p:u.getShared_projects()) {
+					if(!projects.contains(p)) {
+						projects.add(p);
+					}				
+				}
+			}
+			
 			table_projects.setItems(projects);
 			setTableInfo();
 			System.out.println(projects);
@@ -171,15 +183,63 @@ public class Project_Selector_Controller {
 		
 	}
 	
+	@FXML
+	public void share() {
+		try {
+			
+			System.out.println("he entrado en shared");
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("shared.fxml"));
+			Parent root;
+			root = loader.load();
+			Share_Controller sc = loader.getController();
+			sc.setController(u);
+			Scene scene = new Scene(root);
+			Stage stage2 = new Stage();
+			stage2.setScene(scene);
+			Image image = new Image("file:src/main/resources/images/icons/icon_app.jpg");
+			stage2.setTitle("Selección de Projecto");
+			stage2.getIcons().add(image);
+			//stage2.setResizable(false);
+			stage2.initModality(Modality.APPLICATION_MODAL);
+			stage2.show();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
 	private void setTableInfo() {
 		// TODO Auto-generated method stub
 		
 		col_name.setCellValueFactory(eachproject -> {
+			
 			SimpleStringProperty v = new SimpleStringProperty();
-			v.setValue(eachproject.getValue().getTitle());
+			
+			if(u.getShared_projects().contains(eachproject.getValue())) {
+				v.setValue(eachproject.getValue().getTitle()+" (COMPARTIDO POR *"+eachproject.getValue().getUser_creator().getUsername()+"*)");
+			}
+			else {
+				v.setValue(eachproject.getValue().getTitle());
+			}
+			
+			
 			return v;
 		});
 		
 		
+	}
+
+	public void en_dis_share_btn(){
+		if(table_projects.getSelectionModel().getSelectedItem()!=null) {
+			Project p=table_projects.getSelectionModel().getSelectedItem();
+			
+			if(p.getUser_creator().equals(u)) {
+				btn_share.setDisable(false);
+			}
+			else {
+				btn_share.setDisable(true);
+			}
+		}
 	}
 }

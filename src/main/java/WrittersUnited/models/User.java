@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -26,6 +27,7 @@ import WrittersUnited.interfaces.IUser;
 @Table(name="User")
 @NamedQueries({
 	@NamedQuery(name="getByName",query="SELECT u FROM User u WHERE username LIKE :username"),
+	@NamedQuery(name="filterByName",query="SELECT u FROM User u WHERE LOWER(username) LIKE :name"),
 	@NamedQuery(name="getByMail",query="SELECT u FROM User u WHERE mail LIKE :mail"),
 	@NamedQuery(name="getByUserCode",query="SELECT u FROM User u WHERE usercode LIKE :usercode")
 })
@@ -53,10 +55,11 @@ public class User implements IUser, Serializable{
 	@Column(name="confirmed") //tipo set en bbdd, necesita columnDefinition?
 	private boolean confirmed;
 	
-	
-	
 	@OneToMany(mappedBy = "user_creator",orphanRemoval = true)
 	Set<Project> projects;
+	
+	@ManyToMany(mappedBy = "shared_users")
+	Set<Project> shared_projects;
 
 	public User(Long id, String username,String mail, String password, String usercode, boolean confirmed, Set<Project> projects) {
 		super();
@@ -143,6 +146,15 @@ public class User implements IUser, Serializable{
 		// TODO Auto-generated method stub
 		this.projects=projects;
 	}
+	
+	public Set<Project> getShared_projects() {
+		return shared_projects;
+	}
+
+	public void setShared_projects(Set<Project> shared_projects) {
+		this.shared_projects = shared_projects;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

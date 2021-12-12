@@ -99,4 +99,31 @@ public class ProjectDAO {
 		em.getTransaction().commit();
 	}
 
+	public static void shareProject(Project p, User u) {
+        
+		EntityManager em=createEm();
+		
+		em.getTransaction().begin();
+		
+		Query q=em.createNativeQuery("INSERT INTO user_projectshared (id_user, id_project) VALUES (:id_user,:id_project)");
+		q.setParameter("id_user", u.getId());
+		q.setParameter("id_project", p.getId());
+		q.executeUpdate();
+		
+		em.getTransaction().commit();
+    }
+
+	public static void unshareProject(Project p, User u) {
+        
+		EntityManager em=createEm();
+		
+		em.getTransaction().begin();
+		
+		Query q=em.createNativeQuery("DELETE FROM user_projectshared WHERE id_user=:id_user AND id_project=:id_project");
+		q.setParameter("id_user", u.getId());
+		q.setParameter("id_project", p.getId());
+		q.executeUpdate();
+		
+		em.getTransaction().commit();
+    }
 }

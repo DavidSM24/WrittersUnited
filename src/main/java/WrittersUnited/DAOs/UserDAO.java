@@ -62,6 +62,21 @@ public class UserDAO {
 		return result;
 	}
 	
+	public static List<User> filterByName(String name){
+		List<User> result=new ArrayList<User>();
+		
+		EntityManager em=createEm();
+		em.getTransaction().begin();
+		
+		TypedQuery<User> q = em.createNamedQuery("filterByName", User.class);
+		q.setParameter("name", "%" + name.toLowerCase() + "%");
+		result = q.getResultList();
+		
+		
+		em.getTransaction().commit();
+		return result;
+	}
+	
 	public static User getUserByMail(String mail){
 		User result=null;
 		
@@ -99,17 +114,15 @@ public class UserDAO {
 	public static void save(User u) {
 		EntityManager em=createEm();
 		em.getTransaction().begin();	
-		
-		if(em.find(Project.class, u.getId())!=null) {
-			em.merge(u);
-		}
-		else {
-			em.persist(u);
-		}
-		
+		em.persist(u);
+		em.getTransaction().commit();
+	}
+	
+	public static void update(User u) {
+		EntityManager em=createEm();
+		em.getTransaction().begin();	
 		em.merge(u);
 		em.getTransaction().commit();
-		PersistenceUnit.emf.close();
 	}
 	
 	public static void delete(User u) {
