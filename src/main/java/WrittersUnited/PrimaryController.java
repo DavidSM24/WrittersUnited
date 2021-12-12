@@ -155,7 +155,7 @@ public class PrimaryController {
 		});
 	}
 
-	private void setTableInfo() {
+	public void setTableInfo() {
 		col_characters.setCellValueFactory(eachchara -> {
 			SimpleStringProperty v = new SimpleStringProperty();
 			v.setValue(eachchara.getValue().getName());
@@ -334,6 +334,34 @@ public class PrimaryController {
 	}
 
 	@FXML
+	public void remove_Chapter() {
+		if(chapter!=null) {
+			
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setHeaderText(null);
+			alert.setTitle("Confirmación");
+			alert.setContentText(" Se eliminará el personaje.\n" + " ¿Quire continuar?");
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				ChapterDAO.delete(chapter);
+				chapters.remove(chapter);
+				if(chapters.size()>0) {
+					chapter=chapters.get(0);
+					change_Chapter(chapter);
+				}else {
+					
+					txt_chapter_title.setText("");
+					txtarea_chapter_body.setText("");
+					txtarea_chapter_notes.setText("");
+				}
+			}
+			
+			
+		}
+	}
+	
+	@FXML
 	public void edit_Chapter() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("chapter_creator.fxml"));
@@ -374,14 +402,43 @@ public class PrimaryController {
 	}
 	
 	public void change_Chapter(Chapter c) {
-		
-		this.chapter = c;
+			this.chapter = c;
 
-		this.txt_chapter_title.setText("Capítulo " + chapter.getNumber() + ": " + chapter.getTitle());
-		this.txtarea_chapter_body.setText(chapter.getBody());
-		this.txtarea_chapter_notes.setText(chapter.getNotes());
+			if(c!=null) {
+				
+				this.txt_chapter_title.setText("Capítulo " + chapter.getNumber() + ": " + chapter.getTitle());
+				this.txtarea_chapter_body.setText(chapter.getBody());
+				this.txtarea_chapter_notes.setText(chapter.getNotes());
+			}
+			
+			
+
 	}
 
+	@FXML
+	public void sort() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("sort_controller.fxml"));
+			Parent root;
+			root = loader.load();
+			Sort_Controller sc = loader.getController();
+			sc.setController(p, chapters, main);
+			Scene scene = new Scene(root);
+			Stage stage2 = new Stage();
+			stage2.setScene(scene);
+			// Image image= new Image("file:src/main/resources/images/manager.png");
+			stage2.setTitle("Ordenando Capítulos...");
+			stage2.setMaximized(false);
+			// stage2.getIcons().add(image);
+			// stage2.setResizable(false);;
+			stage2.initModality(Modality.APPLICATION_MODAL);
+			stage2.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@FXML
 	public void goNext() {
 

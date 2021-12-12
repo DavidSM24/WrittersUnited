@@ -80,8 +80,6 @@ public class Chapter_Creator_Controller {
 					first=true;
 				}
 				
-				System.out.println("he entrado?");
-				
 				Chapter aux=new Chapter(txt_chapter_title.getText(),
 						chapters.size()+1,
 						txtarea_chapter_description.getText(),
@@ -96,14 +94,18 @@ public class Chapter_Creator_Controller {
 //					ChapterDAO.insert(aux);
 //				}
 				
+				if(main.chapters.size()!=0) {
+					main.save_Chapter();
+				}
+				
 				ChapterDAO.update(aux);
 				p.getChapters().add(aux);
 				chapters.add(aux);
 				
-				if(first) {
-					main.chapter=aux;
-					main.change_Chapter(aux);
-				}
+				
+				
+				main.chapter=aux;
+				main.change_Chapter(aux);
 				
 			}
 			

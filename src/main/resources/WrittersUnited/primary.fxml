@@ -30,8 +30,8 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#new_Chapter" text="Nuevo" />
                   <MenuItem mnemonicParsing="false" onAction="#edit_Chapter" text="Editar" />
-                  <MenuItem mnemonicParsing="false" text="Eliminar" />
-                  <MenuItem mnemonicParsing="false" text="Ordenar" />
+                  <MenuItem mnemonicParsing="false" onAction="#remove_Chapter" text="Eliminar" />
+                  <MenuItem mnemonicParsing="false" onAction="#sort" text="Ordenar" />
             </items>
           </Menu>
         </menus>

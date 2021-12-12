@@ -76,7 +76,8 @@ public class ChapterDAO {
 	public static void delete(Chapter chapter) {
 		EntityManager em = createEm();
 		em.getTransaction().begin();
-		em.remove(chapter);
+		Chapter aux=em.merge(chapter);
+		em.remove(aux);
 		em.getTransaction().commit();
 	}
 
