@@ -20,8 +20,10 @@ public class test_UserDAO {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+		Project p=ProjectDAO.getAll().get(0);
+		
 		try {
-			DOCExporter.testcreateWord("prueba.pdf");
+			DOCExporter.export_To_Word(p,"prueba.doc");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

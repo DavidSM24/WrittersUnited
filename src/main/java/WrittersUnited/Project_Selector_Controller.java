@@ -69,7 +69,6 @@ public class Project_Selector_Controller {
 			
 			table_projects.setItems(projects);
 			setTableInfo();
-			System.out.println(projects);
 		}
 	}
 
@@ -186,8 +185,6 @@ public class Project_Selector_Controller {
 	@FXML
 	public void share() {
 		try {
-			
-			System.out.println("he entrado en shared");
 			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("shared.fxml"));
 			Parent root;

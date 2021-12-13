@@ -1,9 +1,11 @@
 package WrittersUnited;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 import WrittersUnited.models.Project;
+import WrittersUnited.utils.DOCExporter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -29,7 +31,7 @@ public class Export_Controller {
 		this.p=p;
 	}
 	
-	public void add() {
+	public void export() {
 		if(txt_rute.getText().matches("")) {
 			
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -46,7 +48,17 @@ public class Export_Controller {
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK){
-				
+				try {
+					
+					File f=new File(txt_rute.getText());
+					
+					DOCExporter.export_To_Word(p,f.getAbsolutePath()+"\\"+p.getTitle()+".doc");
+					
+					cancel();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
