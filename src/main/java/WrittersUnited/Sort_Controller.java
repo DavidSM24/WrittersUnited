@@ -101,7 +101,7 @@ public class Sort_Controller {
 			int i=1;
 
 			SimpleStringProperty v = new SimpleStringProperty();
-			v.setValue(ns.get(eachchapter.getValue().getNumber()-1)+"");
+			v.setValue(eachchapter.getValue().getNumber()+"");
 				
 			return v;
 		});

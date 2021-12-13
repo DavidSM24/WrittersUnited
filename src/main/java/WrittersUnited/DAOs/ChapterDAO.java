@@ -62,6 +62,7 @@ public class ChapterDAO {
 	public static void insert(Chapter chapter) { // inserta
 		EntityManager em=createEm();
 		em.getTransaction().begin();	
+		System.out.println(chapter);
 		em.persist(chapter);
 		em.getTransaction().commit();
 	}

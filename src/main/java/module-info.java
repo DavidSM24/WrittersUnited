@@ -7,6 +7,7 @@ open module WrittersUnited {
 	requires mail;
 	requires java.persistence;
 	requires org.hibernate.orm.core;
+	requires org.apache.poi.ooxml;
 
     //opens WrittersUnited to javafx.fxml,javafx.graphics,java.sql,java.persistence;
     //opens WrittersUnited.models to javafx.fxml,javafx.graphics,java.sql,java.persistence;

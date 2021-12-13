@@ -24,6 +24,7 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#open_Change" text="Cambiar a ..." />
                   <MenuItem mnemonicParsing="false" onAction="#save_Projet" text="Guardar" />
+                  <MenuItem mnemonicParsing="false" onAction="#open_Export" text="Exportar" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="CAPÍTULO">

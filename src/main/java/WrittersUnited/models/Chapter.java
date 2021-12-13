@@ -28,7 +28,7 @@ public class Chapter implements IChapter, Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
-	protected long id;
+	protected Long id;
     
 	@Column(name="title")
 	protected String title;
@@ -45,7 +45,7 @@ public class Chapter implements IChapter, Serializable{
 	@Column(name="notes")
 	protected String notes;
     
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER,cascade = {CascadeType.MERGE})
 	@JoinColumn(name="id_project")
 	protected Project project;
 
@@ -60,7 +60,8 @@ public class Chapter implements IChapter, Serializable{
     }
 
     public Chapter(String title, int number, String description, String body, String notes, Project project) {
-        this.title = title;
+        this.id=null;
+    	this.title = title;
         this.number = number;
         this.description = description;
         this.body = body;
@@ -148,8 +149,7 @@ public class Chapter implements IChapter, Serializable{
                 ", number=" + number +
                 ", description='" + description + '\'' +
                 ", body='" + body + '\'' +
-                ", notes='" + notes + '\'' +
-                ", project=" + project.getTitle() +
+                ", notes='" + notes + '\''+
                 '}';
     }
 }

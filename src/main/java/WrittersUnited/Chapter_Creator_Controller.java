@@ -1,6 +1,7 @@
 package WrittersUnited;
 
 import WrittersUnited.DAOs.ChapterDAO;
+import WrittersUnited.DAOs.ProjectDAO;
 import WrittersUnited.models.Chapter;
 import WrittersUnited.models.Project;
 import javafx.collections.ObservableList;
@@ -80,32 +81,26 @@ public class Chapter_Creator_Controller {
 					first=true;
 				}
 				
-				Chapter aux=new Chapter(txt_chapter_title.getText(),
+				c=new Chapter(txt_chapter_title.getText(),
 						chapters.size()+1,
 						txtarea_chapter_description.getText(),
 						"",
-						txtarea_chapter_notes.getText(),
-						p);
-				
-//				try {
-//					ChapterDAO.insert(aux);
-//				} catch (Exception e) {
-//					// TODO: handle exception
-//					ChapterDAO.insert(aux);
-//				}
+						txtarea_chapter_notes.getText(),p
+						);
+				p.getChapters().add(c);
 				
 				if(main.chapters.size()!=0) {
-					main.save_Chapter();
+					//main.save_Chapter();
 				}
+				//ProjectDAO.update(p);
+				ChapterDAO.insert(c);
+			
+				chapters.add(c);
 				
-				ChapterDAO.update(aux);
-				p.getChapters().add(aux);
-				chapters.add(aux);
 				
 				
-				
-				main.chapter=aux;
-				main.change_Chapter(aux);
+				//main.chapter=aux;
+				//main.change_Chapter(aux);
 				
 			}
 			

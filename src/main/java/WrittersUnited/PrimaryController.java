@@ -396,9 +396,17 @@ public class PrimaryController {
 	}
 
 	public void save_Projet() {
-		for(Chapter c:chapters) {
-			ChapterDAO.update(c);
+		
+		if(chapters.size()>0&&chapter!=null) {
+			for(Chapter c:chapters) {
+				ChapterDAO.update(c);
+			}
 		}
+		else {
+			
+		}
+		
+		
 	}
 	
 	public void change_Chapter(Chapter c) {
@@ -469,5 +477,41 @@ public class PrimaryController {
 			chapter = chapters.get(i);
 			change_Chapter(chapter);
 		}
+	}
+	
+	@FXML
+	public void open_Export(){
+		
+		if(chapters.size()>0) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("export.fxml"));
+				Parent root;
+				root = loader.load();
+				Export_Controller ec = loader.getController();
+				ec.setController(p);
+				Scene scene = new Scene(root);
+				Stage stage2 = new Stage();
+				stage2.setScene(scene);
+				// Image image= new Image("file:src/main/resources/images/manager.png");
+				stage2.setTitle("Exportar a...");
+				stage2.setMaximized(false);
+				// stage2.getIcons().add(image);
+				// stage2.setResizable(false);;
+				stage2.initModality(Modality.APPLICATION_MODAL);
+				stage2.show();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setHeaderText(null);
+			alert.setTitle("Información");
+			alert.setContentText("Su proyecto no contineen ningún capítulo. Debe crear al menos uno.");
+			alert.showAndWait();
+		}
+		
+		
 	}
 }

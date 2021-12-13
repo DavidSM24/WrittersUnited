@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="121.0" prefWidth="349.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="WrittersUnited.Export_Controller">
+   <children>
+      <Label text="Ruta de creación :">
+         <padding>
+            <Insets left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </Label>
+      <GridPane alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.4000244140625" minWidth="10.0" prefWidth="228.4000244140625" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="152.39996337890625" minWidth="10.0" prefWidth="87.5999755859375" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="txt_rute" editable="false" />
+            <Button mnemonicParsing="false" onAction="#set_Rute" text="Elegir ruta..." GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets left="15.0" right="15.0" top="5.0" />
+         </VBox.margin>
+      </GridPane>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" text="Guardar">
+               <GridPane.margin>
+                  <Insets right="5.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="btn_cancel" mnemonicParsing="false" onAction="#cancel" text="Cancelar" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+      </GridPane>
+   </children>
+</VBox>

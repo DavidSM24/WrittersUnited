@@ -59,7 +59,7 @@ public class Project_Manager {
 				//System.out.println("creado correctamente");
 			}
 			
-			else { //update	
+			else { //update		
 				
 				this.p.setTitle(txt_title.getText());
 				this.p.setDescription(txt_description.getText());
@@ -67,7 +67,12 @@ public class Project_Manager {
 				int i=projects.indexOf(this.p);
 				projects.set(i, p);
 				
-				ProjectDAO.update(this.p);
+				try {
+					ProjectDAO.update(this.p);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
 				
 				
 			}
