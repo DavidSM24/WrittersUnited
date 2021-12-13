@@ -128,8 +128,6 @@ public class Character_Creator_Controller {
 	@FXML
 	public void save(){
 		
-		System.out.println("entro?");
-		
 		if(
 				txt_chara_name.getText().matches("")
 				||txt_chara_description.getText().matches("")
@@ -198,8 +196,6 @@ public class Character_Creator_Controller {
 					
 					characters.add(c);
 					p.getCharacters().add(c);
-					
-					System.out.println(p.getCharacters());
 				}
 				
 				else { //update

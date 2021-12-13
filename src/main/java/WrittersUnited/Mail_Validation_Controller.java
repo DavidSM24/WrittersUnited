@@ -88,7 +88,6 @@ public class Mail_Validation_Controller {
 	private void confirm() throws IOException {
 		if(code!=null) {
 			if(txt_code.getText().matches(code)) { //crear usuario
-				System.out.println("correcto");
 				
 				//int newId=UserDAO.getNewId();
 				while(UserDAO.getUserByUserCode(code)!=null) {
@@ -143,7 +142,6 @@ public class Mail_Validation_Controller {
 				*/
 			}
 			else {
-				System.out.println("incorrecto");
 			}
 		}	
 	}

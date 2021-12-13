@@ -114,7 +114,6 @@ public class Login_Controller {
 					}
 
 					else if (!user.getUsername().matches("root") && !user.isConfirmed()) {
-						System.out.println(user.isConfirmed());
 						try {
 							Alert alert = new Alert(AlertType.CONFIRMATION);
 							alert.setHeaderText(null);
@@ -163,8 +162,6 @@ public class Login_Controller {
 					}
 
 					else { // logear...////////////////////////////////////////////////////////////////////////////////
-
-						System.out.println("se logeo!");
 
 						Stage stage = (Stage) this.btn_login.getScene().getWindow();
 						stage.close();

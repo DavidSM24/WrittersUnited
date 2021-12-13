@@ -210,7 +210,7 @@ public class PrimaryController {
 			Stage stage2 = new Stage();
 			stage2.setScene(scene);
 			// Image image= new Image("file:src/main/resources/images/manager.png");
-			stage2.setTitle("Editando Personaje: " + chara.getName());
+			stage2.setTitle("Editando Personaje");
 			stage2.setMaximized(false);
 			// stage2.getIcons().add(image);
 			// stage2.setResizable(false);;
