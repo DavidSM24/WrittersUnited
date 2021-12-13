@@ -45,7 +45,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#export" text="Guardar">
+            <Button mnemonicParsing="false" text="Guardar">
                <GridPane.margin>
                   <Insets right="5.0" />
                </GridPane.margin>

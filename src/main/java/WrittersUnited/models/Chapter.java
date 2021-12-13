@@ -39,10 +39,10 @@ public class Chapter implements IChapter, Serializable{
 	@Column(name="description")
 	protected String description;
     
-	@Column(name="body",columnDefinition = "LONGTEXT")
+	@Column(name="body")
 	protected String body;
     
-	@Column(name="notes",columnDefinition = "LONGTEXT")
+	@Column(name="notes")
 	protected String notes;
     
 	@ManyToOne(fetch=FetchType.EAGER,cascade = {CascadeType.MERGE})

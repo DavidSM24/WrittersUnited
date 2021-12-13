@@ -24,6 +24,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import WrittersUnited.models.Character;
 
 import WrittersUnited.interfaces.IProject;
@@ -50,6 +53,7 @@ public class Project implements IProject,Serializable {
 	String description;
 	
 	@OneToMany(mappedBy = "project",orphanRemoval = true)
+	@NotFound(action=NotFoundAction.IGNORE)
 	Set<Chapter> chapters;
 	
 	@OneToMany(mappedBy = "chara_project",orphanRemoval = true)
