@@ -9,7 +9,7 @@ public class Conexion {
 	//Esto debe ir en un XML
 
 	private static String server="jdbc:mysql://localhost:3307";
-	private static String database="writtersunited";
+	private static String database="library";
 	private static String username="root";
 	private static String password="";
 	

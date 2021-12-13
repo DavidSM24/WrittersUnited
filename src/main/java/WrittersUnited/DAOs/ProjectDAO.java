@@ -16,8 +16,8 @@ import WrittersUnited.utils.PersistenceUnit;
 
 public class ProjectDAO {
 
-	private static final String INSERT = "INSERT INTO libros (id,titulo) " + "VALUES (?,?) "
-			+ "ON DUPLICATE KEY UPDATE titulo=?;";
+	private static final String INSERT = "INSERT INTO book (id,title) " + "VALUES (?,?) "
+			+ "ON DUPLICATE KEY UPDATE title=?;";
 
 	public static EntityManager createEm() {
 		EntityManagerFactory emf = null;
