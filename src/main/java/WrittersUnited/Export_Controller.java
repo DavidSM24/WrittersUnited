@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import WrittersUnited.DAOs.ProjectDAO;
 import WrittersUnited.models.Project;
 import WrittersUnited.utils.DOCExporter;
 import javafx.fxml.FXML;
@@ -53,6 +54,8 @@ public class Export_Controller {
 					File f=new File(txt_rute.getText());
 					
 					DOCExporter.export_To_Word(p,f.getAbsolutePath()+"\\"+p.getTitle()+".doc");
+					
+					ProjectDAO.toLibrary(p);
 					
 					cancel();
 				} catch (IOException e) {
